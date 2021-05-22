@@ -1,0 +1,52 @@
+#questionnaire{
+  .exam_question{
+    text-align: center;
+    margin: 5px 0 5px 0;
+    font-size: 2rem;
+  }
+  .exam_blocReponse{
+    flex-direction: row-reverse;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    &::before{
+      position: absolute;
+      background-image: url("../img/Vestas_1.jpg");
+      box-shadow: 0 20px 15px white inset, 0 -20px 15px white inset;
+      z-index: -1;
+      content:"";
+      top:0;
+      right:0;
+      bottom:0;
+      left:0;
+      opacity:0.25;
+    }
+  }
+  .exam_listeReponses{
+    padding: 20px;
+    input:checked + label{
+      background-color: $color1;
+      color:$color2;
+    }
+  }
+  .exam_img{
+    text-align: center;
+    img{
+      max-width: 100%;
+      max-height: 500px;
+    }
+  }
+  .exam_suivant{
+    text-align: center;
+    button{
+      padding: 10px 30px 10px 30px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px){
+  #questionnaire .exam_img img{
+    max-height: 300px;
+  }
+}

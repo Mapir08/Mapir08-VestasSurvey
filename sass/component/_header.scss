@@ -1,0 +1,33 @@
+header{
+  .entete{
+    background: url('../img/Vestas_entete.png') no-repeat;
+    height: 200px;
+  }
+  img{
+    padding-left: 320px !important;
+    padding-top: 40px !important;
+  }
+  #signMAPIR{
+    display: block;
+    padding-top: 70px;
+    padding-left: 40px;
+    opacity: 0.6;
+  }
+}
+@media screen and (min-width: 1212px){
+  .entete{
+    width:1212px;
+    margin: auto;
+  }
+}
+ @media screen and (max-width: 768px){
+  header {
+    .entete{
+      height: 160px;
+    }
+    #signMAPIR{
+      padding-top: 30px;
+      padding-left: 60px;
+    }
+  }    
+}

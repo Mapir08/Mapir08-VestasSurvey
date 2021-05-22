@@ -1,0 +1,28 @@
+.choix-rep{
+    margin-bottom: 10px;
+    padding: 8px 10px 8px 10px;
+    background-color: $color2;
+    border: 1px $color1 solid;
+    border-radius: 10px;
+    position:relative;
+    color: $color1;
+    z-index: 1;
+    &::after{
+        position:absolute;
+        content:"";
+        border-radius: 10px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        opacity: 0;
+        z-index: -1;
+        background: linear-gradient(45deg, transparent 45%, lighten($color1 ,25) 60%);
+        transition: opacity 200ms;
+    }
+    &:hover{
+        &::after{
+            opacity: 1;
+        }
+    }
+}

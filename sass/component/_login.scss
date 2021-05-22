@@ -1,0 +1,32 @@
+#login{
+  text-align: center;
+  form{
+    margin: auto;
+    padding: 25px 0 25px 0;
+  }
+  .form-inline{
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    input{
+      margin-left: 5px;
+      text-align: center;
+      color: $color1;
+    }
+  }
+  button{
+    padding:5px 30px 5px 30px;
+  }
+}
+
+@media screen and (max-width: 768px){
+  #login .form-inline{
+    display: block;
+    input{
+      width: 100%;
+      margin-left: 0;
+    }
+    label{
+      justify-content: flex-start;
+    }
+  }
+}

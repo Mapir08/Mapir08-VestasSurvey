@@ -1,0 +1,8 @@
+.trait{
+  height: 10px;
+  background:linear-gradient(black,$color4 10%,$color3,white 100%);
+}
+.trait-reverse{
+  height: 10px;
+  background:linear-gradient(white,$color3 ,$color4 90%,black 100%);
+}
