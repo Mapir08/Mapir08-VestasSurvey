@@ -3,7 +3,7 @@
 // LISTING DES QUESTIONS
 $Q1 = array(
   'question' => "A quoi correspond le symbole ci-dessous ?",
-  'img' => true,
+  'img' => 'pict1',
   'reponse' => 4,
   'choix1' => "Un contacteur",
   'choix2' => "Un disjoncteur",
@@ -12,7 +12,7 @@ $Q1 = array(
 );
 $Q2 = array(
   'question' => "Quel est le composant sur la photos ?",
-  'img' => true,
+  'img' => 'pict2',
   'reponse' => 3,
   'choix1' => "Un contacteur",
   'choix2' => "Un disjoncteur",
@@ -21,7 +21,7 @@ $Q2 = array(
 );
 $Q3 = array(
   'question' => "A quoi correspond le symbole ci-dessous ?",
-  'img' => true,
+  'img' => 'pict3',
   'reponse' => 1,
   'choix1' => "Un contacteur",
   'choix2' => "Un disjoncteur",
@@ -30,7 +30,7 @@ $Q3 = array(
 );
 $Q4 = array(
   'question' => "A quoi correspond le symbole ci-dessous ?",
-  'img' => true,
+  'img' => 'pict4',
   'reponse' => 2,
   'choix1' => "Un contacteur",
   'choix2' => "Un disjoncteur magnéto-thermique",
@@ -44,7 +44,6 @@ $Q5 = array(
   'choix1' => "Le contacteur permet de supporter des courants plus faibles",
   'choix2' => "Le contacteur permet de supporter des courants plus forts"
 );
-
 $questionnaire = array(
   'Q1' => $Q1,
   'Q2' => $Q2,
@@ -56,9 +55,7 @@ $questionnaire = array(
 
 // ACTION AU 'POST'
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-
   $questionnaire['isSuccess'] = true;
-
   if ($_POST['log_code'] != 'V23e7h'){
     $questionnaire['isSuccess'] = false;
   }

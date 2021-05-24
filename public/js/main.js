@@ -1,7 +1,6 @@
 $(function(){
 
-  let qNum, nbMaxQ;
-  let listeQuestions=[];
+  let qNum, nbMaxQ, listeQuestions, listeReponses, saveReponse;
 
   $('#log').submit(function(e){
     e.preventDefault();
@@ -14,19 +13,15 @@ $(function(){
       dataType: 'json',
       success: function(liste){
         if(liste.isSuccess){
-          // Confirmer que TOUTES les questions sont bien dans liste questions
-            console.log(liste); // ATTENTION c'est un tableau JSON
-            
-            
-            
-            console.log(listeQuestions);
-            qNum = 0;
-            nbMaxQ = Object.keys(liste).length;
+            listeQuestions = Object.values(liste);// Mets les questions dans un array
+            listeQuestions.pop()                  // supprime le isSuccess maintenant inutile
+            qNum = 0;                             // Première question
+            nbMaxQ = listeQuestions.length;       // Nombre de question
             afficherPage("questionnaire");
             remplissageQuestionnaire();
           // la première question
         } else {
-          $('#log_code').addClass('error');
+          $('#log_code').addClass('error');       // Si le code n'est pas bon -> message d'erreur
         }
       }
     });
@@ -34,21 +29,24 @@ $(function(){
   $('#exam').submit(function(e){
     e.preventDefault();
     // CONTROLER SI UN CHOIX A ETE FAIT
-
-    // ENREGISTREMENT DE LA REPONSE
-
-    // QUESTION SUIVANTE
-    if (qNum < nbMaxQ) {
-      qNum += 1;
-      remplissageQuestionnaire()
-    } else {
-      afficherPage('resultat');
+    if ($('input[name=choix]:checked').val()) {
+      // ENREGISTREMENT DE LA REPONSE
+      saveReponse.push($('input[name=choix]:checked').next().text()); // Pour la liste des réponses : La réponse choisi
+      listeReponses.push(saveReponse); // enregistrement dans le listing des reponse
+      // QUESTION SUIVANTE
+      if (qNum < nbMaxQ-1) {
+        qNum += 1;
+        remplissageQuestionnaire()
+      } else {
+        afficherPage('resultat');
+      }
     }
   });
   
   function afficherPage(laquelle) {
     switch (laquelle) {
       case 'questionnaire':
+        listeReponses = []
         $('#login').remove();
         $('#questionnaire').removeAttr('style');
         break;
@@ -64,13 +62,35 @@ $(function(){
     }
   };
   function remplissageQuestionnaire(){
-    $('.exam_question').text('Question 1 ?');
-    $('.exam_img').html('<img src="public/img/questions/Q'+ (qNum+1) +'.png">');
-    $('#choix1').next().text('Réponse A');
-    $('#choix2').next().text('Reponse B');
-    $('#choix3').next().text('Reponse C');
-    $('#choix4').next().text('Reponse D');
+    saveReponse = [];
+    // La question
+    $('.exam_question').text(listeQuestions[qNum].question);
+    saveReponse.push(listeQuestions[qNum].question); // Pour la liste des réponses : La question
+    // Condition d'affichage IMAGE
+    if (listeQuestions[qNum].img){
+      $('.exam_img').html('<img src="public/img/questions/'+listeQuestions[qNum].img+'.png">');
+      saveReponse.push(listeQuestions[qNum].img); // Pour la liste des réponses : L'image
+      $('.exam_listeReponses').addClass('col-md-6');
+      $('.exam_img').removeAttr('style');
+    } else {
+      $('.exam_img').html('');
+      saveReponse.push(false); // Pour la liste des réponses : Pas d'image
+      $('.exam_img').attr('style="display:none;"');
+      $('.exam_listeReponses').removeClass('col-md-6');
+    }
+    // Le choix des réponses
+    let nbChoix = Object.keys(listeQuestions[qNum]).length - 3;
+    let codeHtmlReponses = '';
+    for (let i=1 ; i < nbChoix+1 ; i++){
+      codeHtmlReponses += '<input type="radio" name="choix" id="choix'+i+'" hidden><label for="choix'+i+'" class="choix-rep col-12"></label>';
+    }
+    $('.exam_listeReponses').html(codeHtmlReponses); // créer les div pour le nombre de réponse possible
+    $('#choix1').next().text(listeQuestions[qNum].choix1); // remplir les choix possible
+    $('#choix2').next().text(listeQuestions[qNum].choix2);
+    $('#choix3').next().text(listeQuestions[qNum].choix3);
+    $('#choix4').next().text(listeQuestions[qNum].choix4);
+    saveReponse.push($('#choix'+listeQuestions[qNum].reponse).next().text()) // Pour la liste des réponses : La bonne réponse
+    // Le compteur
     $('.exam_compteur').html('<span class="exam_compteur_num">' + (qNum+1) + '</span> / ' + nbMaxQ);
   };
-
 });

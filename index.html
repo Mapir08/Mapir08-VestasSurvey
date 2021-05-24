@@ -29,7 +29,23 @@
       <form id="log" method="POST" class="col-4">
         <div class="form-inline"><label for="log_name">Nom candidat :</label><input type="text" class="form-control" name="log_name" id="log_name"></div>
         <div class="form-inline"><label for="log_code">Code exam :</label><input type="text" class="form-control" name="log_code" id="log_code"></div>
-        <div class="form-inline"><label for="log_area">Pour la Région :</label><input type="text" class="form-control" name="log_area" id="log_area"></div>
+        <div class="form-inline">
+          <label for="log_area">Pour la Région :</label><!-- <input type="text" class="form-control" name="log_area" id="log_area"> -->
+          <select name="log_area" id="log_area" class="form-control">
+            <option value="">- Area -</option>
+            <option value="ami">Amiens</option>
+            <option value="arr">Arras</option>
+            <option value="atl">Atlantique</option>
+            <option value="bre">Bretagne</option>
+            <option value="cen">Centre</option>
+            <option value="cha">Champagne</option>
+            <option value="lor">Lorraine</option>
+            <option value="n-e">Nord-Est</option>
+            <option value="rei">Reims</option>
+            <option value="s-q">Saint quentin</option>
+            <option value="s-o">Sud Ouest</option>
+          </select>
+        </div>
         <button type="submit" class="btn btn-colored">Go !</button>
       </form>
     </section>
@@ -40,10 +56,6 @@
         <div class="exam_blocReponse row">
           <div class="exam_img col-md-6"></div>
           <div class="exam_listeReponses col-md-6">
-            <input type="radio" name="choix" id="choix1" hidden><label for="choix1" class="choix-rep col-12"></label>
-            <input type="radio" name="choix" id="choix2" hidden><label for="choix2" class="choix-rep col-12"></label>
-            <input type="radio" name="choix" id="choix3" hidden><label for="choix3" class="choix-rep col-12"></label>
-            <input type="radio" name="choix" id="choix4" hidden><label for="choix4" class="choix-rep col-12"></label>
           </div>
         </div>
         <div class="exam_suivant"><button type="submit" class="btn btn-colored">Suivant</button></div>

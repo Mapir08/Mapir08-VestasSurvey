@@ -7,10 +7,12 @@
   .form-inline{
     justify-content: flex-end;
     margin-bottom: 10px;
-    input{
+    input, select{
       margin-left: 5px;
       text-align: center;
+      text-align-last: center;
       color: $color1;
+      width: 170px;
     }
   }
   button{
@@ -25,7 +27,7 @@
 @media screen and (max-width: 768px){
   #login .form-inline{
     display: block;
-    input{
+    input, select{
       width: 100%;
       margin-left: 0;
     }
