@@ -63,11 +63,9 @@ $(function(){
   };
   function remplissageQuestionnaire(){
     saveReponse = [];
-    // La question
-    $('.exam_question').text(listeQuestions[qNum].question);
+    $('.exam_question').text(listeQuestions[qNum].question); // La question
     saveReponse.push(listeQuestions[qNum].question); // Pour la liste des réponses : La question
-    // Condition d'affichage IMAGE
-    if (listeQuestions[qNum].img){
+    if (listeQuestions[qNum].img){ // Condition d'affichage IMAGE
       $('.exam_img').html('<img src="public/img/questions/'+listeQuestions[qNum].img+'.png">');
       saveReponse.push(listeQuestions[qNum].img); // Pour la liste des réponses : L'image
       $('.exam_listeReponses').addClass('col-md-6');
@@ -90,7 +88,6 @@ $(function(){
     $('#choix3').next().text(listeQuestions[qNum].choix3);
     $('#choix4').next().text(listeQuestions[qNum].choix4);
     saveReponse.push($('#choix'+listeQuestions[qNum].reponse).next().text()) // Pour la liste des réponses : La bonne réponse
-    // Le compteur
-    $('.exam_compteur').html('<span class="exam_compteur_num">' + (qNum+1) + '</span> / ' + nbMaxQ);
+    $('.exam_compteur').html('<span class="exam_compteur_num">' + (qNum+1) + '</span> / ' + nbMaxQ); // Le compteur
   };
 });
