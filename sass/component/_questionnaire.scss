@@ -3,11 +3,12 @@
   .exam_question{
     text-align: center;
     margin: 5px 0 5px 0;
-    font-size: 2rem;
+    font-size: 1.7rem;
   }
   .exam_blocReponse{
     flex-direction: row-reverse;
     align-items: center;
+    justify-content: center;
     position: relative;
     z-index: 1;
     &::before{
@@ -40,7 +41,7 @@
   .exam_suivant{
     text-align: center;
     button{
-      padding: 10px 30px 10px 30px;
+      padding: 5px 30px 5px 30px;
       margin-bottom: 10px;
     }
   }

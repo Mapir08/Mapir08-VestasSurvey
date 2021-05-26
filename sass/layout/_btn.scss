@@ -1,8 +1,9 @@
 .btn-colored{
-  background-color: $color1;
-  color: $color2 ;
+  border-color: $color1;
+  background-color: $color2;
+  color: $color1;
   &:hover{
-    filter: brightness(0.95);
+    background-color: $color1;
     color: $color2 ;
   }
 }

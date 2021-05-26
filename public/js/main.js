@@ -1,10 +1,10 @@
 $(function(){
 
   let qNum, nbMaxQ, listeQuestions, listeReponses, saveReponse;
+  let candidatName, areaMail, pourcentage;
 
   $('#log').submit(function(e){
     e.preventDefault();
-    // RECUPERER LA LISTE DES QUESTION VOULU en vérifiant si le formulaire est correct
     let logData = $('#log').serialize();
     $.ajax({
       type: 'POST',
@@ -12,33 +12,46 @@ $(function(){
       data: logData,
       dataType: 'json',
       success: function(liste){
-        if(liste.isSuccess){
+        if(liste.codeSuccess && liste.nameSuccess && liste.areaSuccess){
             listeQuestions = Object.values(liste);// Mets les questions dans un array
-            listeQuestions.pop()                  // supprime le isSuccess maintenant inutile
+            candidatName = liste.candidat;
+            areaMail = liste.area;
+            listeQuestions.pop();                  // supprime l'area maintenant inutile
+            listeQuestions.pop();                  // supprime le nom maintenant inutile
+            listeQuestions.pop();                  // supprime le areaSuccess maintenant inutile
+            listeQuestions.pop();                  // supprime le logSuccess maintenant inutile
+            listeQuestions.pop();                  // supprime le codeSuccess maintenant inutile
+            console.log(listeQuestions);
+            console.log(candidatName);
+            console.log(areaMail);
             qNum = 0;                             // Première question
             nbMaxQ = listeQuestions.length;       // Nombre de question
             afficherPage("questionnaire");
-            remplissageQuestionnaire();
-          // la première question
+            remplissageQuestionnaire();           // la première question
         } else {
-          $('#log_code').addClass('error');       // Si le code n'est pas bon -> message d'erreur
+          if (!liste.codeSuccess){
+            $('#log_code').addClass('error');     // Si le code n'est pas bon -> message d'erreur
+          }
+          if (!liste.nameSuccess){
+            $('#log_name').addClass('error');     // Si le nom n'est pas bon -> message d'erreur
+          }
+          if (!liste.areaSuccess){
+            $('#log_area').addClass('error');     // Si le nom n'est pas bon -> message d'erreur
+          }
         }
       }
     });
   });
   $('#exam').submit(function(e){
     e.preventDefault();
-    // CONTROLER SI UN CHOIX A ETE FAIT
     if ($('input[name=choix]:checked').val()) {
-      // ENREGISTREMENT DE LA REPONSE
       saveReponse.push($('input[name=choix]:checked').next().text()); // Pour la liste des réponses : La réponse choisi
-      listeReponses.push(saveReponse); // enregistrement dans le listing des reponse
-      // QUESTION SUIVANTE
-      if (qNum < nbMaxQ-1) {
-        qNum += 1;
+      listeReponses.push(saveReponse);                                // enregistrement dans le listing des reponses
+      if (qNum < nbMaxQ-1) { 
+        qNum += 1;                                                    // QUESTION SUIVANTE
         remplissageQuestionnaire()
       } else {
-        afficherPage('resultat');
+        afficherPage('resultat');                                     // FIN
       }
     }
   });
@@ -52,42 +65,83 @@ $(function(){
         break;
       case 'resultat':
         $('section').remove();
+        enleveBonneReponse(listeReponses);
+        pourcentage = 1-(listeReponses.length/nbMaxQ);
         $('header').after('\
-        <section id="error" class="container-fluid">\
-          <div class="error-msg">FINI !</div>\
-          <a href="" class="btn btn-colored">Bravo</a>\
-        </section>'
-      );
+          <section id="resultat" class="container-fluid">\
+            <div class="col-12 resultat-presentation">Voici le résultat pour le candidat : <span id="resultat-candidat" class="marque">'+ candidatName +'</span></div>\
+            <div class="row resultat-bloc">\
+              <div class="col-md-2 col-11 resultat_barre-ext"><div class="resultat_barre-int" style="height:'+Math.round(pourcentage * 100)+'%;width:'+Math.round(pourcentage * 100)+'%"><span>'+Math.round(pourcentage * 100)+'%</span></div></div>\
+              <div class="col-md-9 col-11 resultat_panneau"></div>\
+            </div>\
+            <div class="resultat-btn"><a href="" class="btn btn-colored">Recommencer</a></div>\
+          </section>\
+        ');
+        if (pourcentage == 1){
+          $('.resultat-presentation').after('<div class="col-12 resultat-presentation" id="resultat-presentation">Bravo, c\'est un <span class="marque">100%</span>.</div>');
+        }else{
+          $('.resultat-presentation').after('<div class="col-12 resultat-presentation" id="resultat-presentation"><span class="marque">'+ Math.round(pourcentage * 100)+'%</span> de bonne réponse. Ci-dessous les erreurs :</div>');
+          for (let i = 0 ; i<listeReponses.length ; i++) {
+            const tempo = '\
+            <div class="row resultat_panneau-detail" id="temporaire">\
+              <div class="col-md-8 col-9">\
+                <div class="resultat_panneau-question">'+listeReponses[i][0]+'</div>\
+                <div class="resultat_panneau-reponseDonnee">'+listeReponses[i][3]+'</div>\
+                <div class="resultat_panneau-bonneReponse">'+listeReponses[i][2]+'</div>\
+              </div>\
+            </div>';
+            $('.resultat_panneau').append(tempo);
+            if (listeReponses[i][1]){
+              $('#temporaire').append('<div class="col-md-4 col-3 resultat_panneau-img"><img src="public/img/questions/'+listeReponses[i][1]+'.png"></div>');
+            }
+            $("#temporaire").removeAttr('id');
+          }
+        }
         break;
+      case 'error':
+        $('section').remove();
+        $('header').after('\
+          <section id="error" class="container-fluid">\
+            <div class="error-msg">!! ERREUR !!</div>\
+            <a href="" class="btn btn-colored">Recommencer</a>\
+          </section>\
+        ');
     }
   };
   function remplissageQuestionnaire(){
     saveReponse = [];
-    $('.exam_question').text(listeQuestions[qNum].question); // La question
-    saveReponse.push(listeQuestions[qNum].question); // Pour la liste des réponses : La question
-    if (listeQuestions[qNum].img){ // Condition d'affichage IMAGE
+    $('.exam_question').text(listeQuestions[qNum].question);   
+    saveReponse.push(listeQuestions[qNum].question);           // Pour la liste des réponses : La question
+    if (listeQuestions[qNum].img){                             // Condition d'affichage IMAGE
       $('.exam_img').html('<img src="public/img/questions/'+listeQuestions[qNum].img+'.png">');
-      saveReponse.push(listeQuestions[qNum].img); // Pour la liste des réponses : L'image
+      saveReponse.push(listeQuestions[qNum].img);              // Pour la liste des réponses : L'image
       $('.exam_listeReponses').addClass('col-md-6');
       $('.exam_img').removeAttr('style');
     } else {
       $('.exam_img').html('');
-      saveReponse.push(false); // Pour la liste des réponses : Pas d'image
+      saveReponse.push(false);                                 // Pour la liste des réponses : Pas d'image
       $('.exam_img').attr('style="display:none;"');
       $('.exam_listeReponses').removeClass('col-md-6');
     }
-    // Le choix des réponses
-    let nbChoix = Object.keys(listeQuestions[qNum]).length - 3;
     let codeHtmlReponses = '';
-    for (let i=1 ; i < nbChoix+1 ; i++){
+    for (let i=1 ; i < Object.keys(listeQuestions[qNum]).length - 2 ; i++){
       codeHtmlReponses += '<input type="radio" name="choix" id="choix'+i+'" hidden><label for="choix'+i+'" class="choix-rep col-12"></label>';
     }
-    $('.exam_listeReponses').html(codeHtmlReponses); // créer les div pour le nombre de réponse possible
-    $('#choix1').next().text(listeQuestions[qNum].choix1); // remplir les choix possible
+    $('.exam_listeReponses').html(codeHtmlReponses);
+    $('#choix1').next().text(listeQuestions[qNum].choix1);
     $('#choix2').next().text(listeQuestions[qNum].choix2);
     $('#choix3').next().text(listeQuestions[qNum].choix3);
     $('#choix4').next().text(listeQuestions[qNum].choix4);
     saveReponse.push($('#choix'+listeQuestions[qNum].reponse).next().text()) // Pour la liste des réponses : La bonne réponse
-    $('.exam_compteur').html('<span class="exam_compteur_num">' + (qNum+1) + '</span> / ' + nbMaxQ); // Le compteur
+    $('.exam_compteur').html('<span class="exam_compteur_num">'+(qNum+1)+'</span> / '+nbMaxQ);
   };
+  function enleveBonneReponse(liste){
+    for (let i=0; i<liste.length; i++) {
+      if (liste[i][2] == liste[i][3]){
+        liste.splice(i, 1);
+        i -= 1;
+      }
+    }
+    return liste;
+  }
 });

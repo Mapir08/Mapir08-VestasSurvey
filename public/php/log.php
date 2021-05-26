@@ -50,16 +50,42 @@ $questionnaire = array(
   'Q3' => $Q3,
   'Q4' => $Q4,
   'Q5' => $Q5,
-  'isSuccess' => false
+  'codeSuccess' => false,
+  'nameSuccess' => false,
+  'areaSuccess' => false,
+  'candidat' => verif($_POST['log_name']),
+  'area' => 'mapir@vestas.com'
 );
 
 // ACTION AU 'POST'
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-  $questionnaire['isSuccess'] = true;
-  if ($_POST['log_code'] != 'V23e7h'){
-    $questionnaire['isSuccess'] = false;
+  $questionnaire['codeSuccess'] = true;
+  $questionnaire['nameSuccess'] = true;
+  $questionnaire['areaSuccess'] = true;
+
+  if ($_POST['log_name'] == ''){
+    $questionnaire['nameSuccess'] = false;
   }
+  if ($_POST['log_area'] == ''){
+    $questionnaire['areaSuccess'] = false;
+  }
+  if ($_POST['log_code'] != 'V1e23h7'){
+    $questionnaire['codeSuccess'] = false;
+  }
+
+  switch ($_POST['log_area']){
+    case 'cha':
+      $questionnaire['area'] = 'oligu@vestas.com';
+      break;
+    case 'rei':
+      $questionnaire['area'] = 'hicel@vestas.com';
+      break;
+  }
+
   echo json_encode($questionnaire);
 }
-
+function verif($var){
+  $var=strip_tags($var);
+  return $var;
+}
 ?>
