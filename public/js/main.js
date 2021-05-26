@@ -11,32 +11,24 @@ $(function(){
       url: 'public/php/log.php',
       data: logData,
       dataType: 'json',
-      success: function(liste){
-        if(liste.codeSuccess && liste.nameSuccess && liste.areaSuccess){
-            listeQuestions = Object.values(liste);// Mets les questions dans un array
-            candidatName = liste.candidat;
-            areaMail = liste.area;
-            listeQuestions.pop();                  // supprime l'area maintenant inutile
-            listeQuestions.pop();                  // supprime le nom maintenant inutile
-            listeQuestions.pop();                  // supprime le areaSuccess maintenant inutile
-            listeQuestions.pop();                  // supprime le logSuccess maintenant inutile
-            listeQuestions.pop();                  // supprime le codeSuccess maintenant inutile
-            console.log(listeQuestions);
-            console.log(candidatName);
-            console.log(areaMail);
+      success: function(retour){
+        if(retour.confirmation.codeSuccess && retour.confirmation.nameSuccess && retour.confirmation.areaSuccess){
+            listeQuestions = Object.values(retour.questionnaire);// Mets les questions dans un array
+            candidatName = retour.confirmation.candidat; // on récupère le nom du candidat
+            areaMail = retour.confirmation.area;         // on récupère le mail de l'area
             qNum = 0;                             // Première question
             nbMaxQ = listeQuestions.length;       // Nombre de question
             afficherPage("questionnaire");
-            remplissageQuestionnaire();           // la première question
+            remplissageQuestionnaire();
         } else {
-          if (!liste.codeSuccess){
+          if (!retour.confirmation.codeSuccess){
             $('#log_code').addClass('error');     // Si le code n'est pas bon -> message d'erreur
           }
-          if (!liste.nameSuccess){
+          if (!retour.confirmation.nameSuccess){
             $('#log_name').addClass('error');     // Si le nom n'est pas bon -> message d'erreur
           }
-          if (!liste.areaSuccess){
-            $('#log_area').addClass('error');     // Si le nom n'est pas bon -> message d'erreur
+          if (!retour.confirmation.areaSuccess){
+            $('#log_area').addClass('error');     // Si l'area n'est pas bon -> message d'erreur
           }
         }
       }
