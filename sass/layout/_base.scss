@@ -1,11 +1,18 @@
-.container, .container-fluid, p, .col-3, .col-4, .col-6, .col-8, .col-9, .col-11, .col-12, .col-md-2, .col-md-6, .col-md-4, .col-md-9, .col-md-10, .row, .form-control{
+.container, .container-fluid, p, ul, .col-3, .col-4, .col-6, .col-8, .col-9, .col-11, .col-12, .col-md-2, .col-md-6, .col-md-4, .col-md-9, .col-md-10, .row, .form-control{
   margin:0;
   padding:0;
 }
 body{
   font-family: 'Roboto', sans-serif;
   font-size: 0.9rem;
+  background-color: #a3b6c6;
 }
 a{
-  text-decoration: none;
+  text-decoration: none !important;
+}
+li{
+  list-style: none;
+}
+.blanc{
+  background-color: white;
 }

@@ -5,7 +5,7 @@ $(function(){
 
   $('#log').submit(function(e){
     e.preventDefault();
-    let logData = $('#log').serialize();
+    let logData = $('#log').serialize(); // A TESTER : remplacer '#log' par this
     $.ajax({
       type: 'POST',
       url: 'public/php/log.php',
@@ -18,7 +18,6 @@ $(function(){
             areaMail = retour.confirmation.area;         // on récupère le mail de l'area
             qNum = 0;                             // Première question
             nbMaxQ = listeQuestions.length;       // Nombre de question
-            console.log(listeQuestions);          // TEMPORAIRE
             afficherPage("questionnaire");
             remplissageQuestionnaire();
         } else {
@@ -40,15 +39,41 @@ $(function(){
     if ($('input[name=choix]:checked').val()) {
       saveReponse.push($('input[name=choix]:checked').next().text()); // Pour la liste des réponses : La réponse choisi
       listeReponses.push(saveReponse);                                // enregistrement dans le listing des reponses
-      if (qNum < nbMaxQ-1) { 
-        qNum += 1;                                                    // QUESTION SUIVANTE
-        remplissageQuestionnaire()
-      } else {
-        afficherPage('resultat');                                     // FIN
-      }
+      $.ajax({
+        type: 'POST',
+        url: 'public/php/save.php',
+        data: 'c='+ candidatName +'&q='+ saveReponse[0] +'&img='+ saveReponse[1] +'&br='+ saveReponse[2] +'&r='+ saveReponse[3] +'&a='+ areaMail,
+        success: function(){
+          if (qNum < nbMaxQ-1) { 
+            qNum += 1;                                                    // QUESTION SUIVANTE
+            remplissageQuestionnaire()
+          } else {
+            afficherPage('resultat');                                     // FIN
+          }
+        }
+      });
     }
   });
-  
+  $('#footer-detail_area').click(function(){
+    $('#footer-modal').fadeIn();
+    $.ajax({
+      url: 'public/php/area.php',
+      type: 'POST',
+      dataType: 'json',
+      success: function(retour){
+        console.log(retour);
+        let listeArea='';
+        for (let i in retour){
+          listeArea += '<li><span class="footer-modal_color">'+ retour[i].nomRegion +'</span> - '+ retour[i].nom +'</li>';
+        }
+        $('#footer-modal_ul').html(listeArea);
+      }
+    });
+  });
+  $('#footer-modal').click(function(){
+    $('#footer-modal').fadeOut();
+  });
+
   function afficherPage(laquelle) {
     switch (laquelle) {
       case 'questionnaire':
@@ -61,7 +86,7 @@ $(function(){
         enleveBonneReponse(listeReponses);
         pourcentage = 1-(listeReponses.length/nbMaxQ);
         $('header').after('\
-          <section id="resultat" class="container-fluid">\
+          <section id="resultat" class="container-fluid blanc">\
             <div class="col-12 resultat-presentation">Voici le résultat pour le candidat : <span id="resultat-candidat" class="marque">'+ candidatName +'</span></div>\
             <div class="row resultat-bloc">\
               <div class="col-md-2 col-11 resultat_barre-ext"><div class="resultat_barre-int" style="height:'+Math.round(pourcentage * 100)+'%;width:'+Math.round(pourcentage * 100)+'%"><span>'+Math.round(pourcentage * 100)+'%</span></div></div>\

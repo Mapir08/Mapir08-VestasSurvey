@@ -1,0 +1,51 @@
+footer{
+  text-align: center;
+  .footer-choix{
+    justify-content: space-around;
+    margin-top: 20px;
+    font-family: 'Caveat', cursive;
+    a, span{
+      font-size: 1.4rem;
+      color:$color4;
+      cursor: pointer;
+      &:hover{
+        color: $color2;
+        text-shadow: 1px 1px 2px black;
+      }
+    }
+  }
+  .footer-end{
+    font-family: 'Caveat', cursive;
+    margin-top: 20px;
+    font-size: 0.8rem;
+    font-style: italic;
+    color:$color4;
+  }
+}
+#footer-modal{
+  display: none;
+  position:fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 100%;
+  #footer-modal_description{
+    p{
+      font-family: 'Caveat', cursive;
+      font-size: 2rem;
+      color:$color3;
+    }
+    margin:20% auto;
+    width: 60%;
+    border-radius: 15px;
+    background-color: $color2;
+    box-shadow: 5px 5px 5px $color4;
+    padding: 10px 10px 20px 10px;
+    .footer-modal_color{
+      color: $color1;
+      font-size: 1.2rem;
+      font-family: 'Caveat', cursive;
+    }
+  }
+}
