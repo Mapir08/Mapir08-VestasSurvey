@@ -18,6 +18,7 @@ $(function(){
             areaMail = retour.confirmation.area;         // on récupère le mail de l'area
             qNum = 0;                             // Première question
             nbMaxQ = listeQuestions.length;       // Nombre de question
+            console.log(listeQuestions);          // TEMPORAIRE
             afficherPage("questionnaire");
             remplissageQuestionnaire();
         } else {
@@ -116,8 +117,13 @@ $(function(){
       $('.exam_listeReponses').removeClass('col-md-6');
     }
     let codeHtmlReponses = '';
-    for (let i=1 ; i < Object.keys(listeQuestions[qNum]).length - 2 ; i++){
-      codeHtmlReponses += '<input type="radio" name="choix" id="choix'+i+'" hidden><label for="choix'+i+'" class="choix-rep col-12"></label>';
+    codeHtmlReponses += '<input type="radio" name="choix" id="choix1" hidden><label for="choix1" class="choix-rep col-12"></label>';
+    codeHtmlReponses += '<input type="radio" name="choix" id="choix2" hidden><label for="choix2" class="choix-rep col-12"></label>';
+    if (Object.values(listeQuestions[qNum].choix3) != ''){
+      codeHtmlReponses += '<input type="radio" name="choix" id="choix3" hidden><label for="choix3" class="choix-rep col-12"></label>';
+      if (Object.values(listeQuestions[qNum].choix4) != ''){
+        codeHtmlReponses += '<input type="radio" name="choix" id="choix4" hidden><label for="choix4" class="choix-rep col-12"></label>';
+      }
     }
     $('.exam_listeReponses').html(codeHtmlReponses);
     $('#choix1').next().text(listeQuestions[qNum].choix1);
