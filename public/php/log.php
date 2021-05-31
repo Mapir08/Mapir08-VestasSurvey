@@ -36,11 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $code['V'] = $pourRecupV[0]; // V est OK
     $pourRecupE = explode('H' , $pourRecupV[1]);
     $code['E'] = $pourRecupE[0]; // E est Ok
-    $pourRecupH = explode('M' , $pourRecupE[1]):
+    $pourRecupH = explode('M' , $pourRecupE[1]);
     $code['H'] = $pourRecupH[0]; // H est Ok
     $pourRecupM = explode('A' , $pourRecupH[1]);
     $code['M'] = $pourRecupM[0]; // M est Ok
-    $pourRecupA = explode('S' , $pourRecupM[1]):
+    $pourRecupA = explode('S' , $pourRecupM[1]);
     $code['A'] = $pourRecupA[0]; // A est Ok
     $code['S'] = $pourRecupA[1]; // S est Ok
 
