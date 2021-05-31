@@ -27,11 +27,10 @@
     </header>
 
     <section id="login" class="container-fluid blanc">
-      <form id="log" method="POST" class="col-4">
-        <div class="form-inline"><label for="log_name">Nom candidat :</label><input type="text" class="form-control" name="log_name" id="log_name"></div>
+      <form id="log" method="POST" class="col-4" autocomplete="off">
+        <div class="form-inline"><label for="log_name">Nom Prénom :</label><input type="text" class="form-control" name="log_name" id="log_name"></div>
         <div class="form-inline"><label for="log_code">Code exam :</label><input type="text" class="form-control" name="log_code" id="log_code"></div>
-        <div class="form-inline">
-          <label for="log_area">Pour la Région :</label>
+        <div class="form-inline"><label for="log_area">Pour la Région :</label>
           <select name="log_area" id="log_area" class="form-control">
             <option value="">- Area -</option>
             <option value="ami">Amiens</option>
@@ -45,6 +44,7 @@
             <option value="rei">Reims</option>
             <option value="s-o">Sud Ouest</option>
             <option value="s-q">Saint quentin</option>
+            <option value="vdr">Vallée du Rhone</option>
           </select>
         </div>
         <button type="submit" class="btn btn-colored">Go !</button>

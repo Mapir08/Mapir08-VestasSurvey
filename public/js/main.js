@@ -5,7 +5,7 @@ $(function(){
 
   $('#log').submit(function(e){
     e.preventDefault();
-    let logData = $('#log').serialize(); // A TESTER : remplacer '#log' par this
+    let logData = $(this).serialize();
     $.ajax({
       type: 'POST',
       url: 'public/php/log.php',
@@ -18,6 +18,9 @@ $(function(){
             areaMail = retour.confirmation.area;         // on récupère le mail de l'area
             qNum = 0;                             // Première question
             nbMaxQ = listeQuestions.length;       // Nombre de question
+
+            $('#footer-modal').remove();
+            $('footer ul').remove();
             afficherPage("questionnaire");
             remplissageQuestionnaire();
         } else {
@@ -134,12 +137,14 @@ $(function(){
       $('.exam_img').html('<img src="public/img/questions/'+listeQuestions[qNum].img+'.png">');
       saveReponse.push(listeQuestions[qNum].img);              // Pour la liste des réponses : L'image
       $('.exam_listeReponses').addClass('col-md-6');
-      $('.exam_img').removeAttr('style');
+      $('.exam_listeReponses').removeClass('col-md-11');
+      $('.exam_img').css('display', 'block');
     } else {
       $('.exam_img').html('');
       saveReponse.push(false);                                 // Pour la liste des réponses : Pas d'image
-      $('.exam_img').attr('style="display:none;"');
+      $('.exam_img').css('display', 'none');
       $('.exam_listeReponses').removeClass('col-md-6');
+      $('.exam_listeReponses').addClass('col-md-11');
     }
     let codeHtmlReponses = '';
     codeHtmlReponses += '<input type="radio" name="choix" id="choix1" hidden><label for="choix1" class="choix-rep col-12"></label>';

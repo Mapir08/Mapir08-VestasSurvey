@@ -8,7 +8,7 @@ try{
     die('ERROR: '.$e->getMessage());
   }
 
-// ACTION AU 'GET' DE L'EXAM
+// ACTION AU 'POST' DE L'EXAM
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
   $database -> query('INSERT INTO `savestest` (`candidat`, `region`, `question`, `img`, `bonneReponse`, `reponseChoisi`) VALUES ("'.$_POST['c'].'", "'.$_POST['a'].'", "'.$_POST['q'].'", "'.$_POST['img'].'", "'.$_POST['br'].'", "'.$_POST['r'].'");');
 }

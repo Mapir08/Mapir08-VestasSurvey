@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
   <!-- SCRIPT -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <script src="public/js/main.js" type="text/javascript"></script>
+  <script src="public/js/liste.js" type="text/javascript"></script>
 
   <title>Listing of tests done</title>
 </head>
@@ -26,12 +26,64 @@
       <div class="trait"></div>
     </header>
 
-    <section class="container-fluid blanc">
-      
+    <section id="done-candidat" class="container-fluid blanc">
+      <h2>Liste des candidats aillant fait un test :</h2>
+      <ul class="container">
+        <!-- A créer pour chaque candidat -->
+        <li class="container-fluid">
+          <div class="done-candidat_presentation row">
+            <div class="done-candidat_voir col-1"><i class="bi bi-caret-down-fill"></i></div>
+            <div class="done-candidat_nom col-4">Mathieu</div>
+            <div class="done-candidat_pourcentage col-1">100%</div>
+            <div class="done-candidat_region col-3">Sud-Ouest</div>
+            <div class="done-candidat_date col-3">20-12-2022</div>
+          </div>
+          <div class="done-candidat_liste container-fluid">
+            <!-- A dupliquer pour 30 questions Condition si pas d'image col-12-->
+            <div class="row">
+              <div class="col-9">
+                <div class="done-candidat_question">question</div>
+                <div class="done-candidat_reponseChoisi">reponseChoisi</div>
+                <div class="done-candidat_bonneReponse">bonneReponse</div>
+              </div>
+              <div class="col-3">
+                <div class="done-candidat_img"></div>
+              </div>
+            </div>
+            <div class="row"><div class="col-9"><div class="done-candidat_question">question</div><div class="done-candidat_reponseChoisi">reponseChoisi</div><div class="done-candidat_bonneReponse">bonneReponse</div></div><div class="col-3"><div class="done-candidat_img"></div></div></div>
+            <div class="row"><div class="col-9"><div class="done-candidat_question">question</div><div class="done-candidat_reponseChoisi">reponseChoisi</div><div class="done-candidat_bonneReponse">bonneReponse</div></div><div class="col-3"><div class="done-candidat_img"></div></div></div>
+            <div class="row"><div class="col-9"><div class="done-candidat_question">question</div><div class="done-candidat_reponseChoisi">reponseChoisi</div><div class="done-candidat_bonneReponse">bonneReponse</div></div><div class="col-3"><div class="done-candidat_img"></div></div></div>
+            <div class="row"><div class="col-9"><div class="done-candidat_question">question</div><div class="done-candidat_reponseChoisi">reponseChoisi</div><div class="done-candidat_bonneReponse">bonneReponse</div></div><div class="col-3"><div class="done-candidat_img"></div></div></div>
+            <div class="row"><div class="col-9"><div class="done-candidat_question">question</div><div class="done-candidat_reponseChoisi">reponseChoisi</div><div class="done-candidat_bonneReponse">bonneReponse</div></div><div class="col-3"><div class="done-candidat_img"></div></div></div>
+            <div class="row"><div class="col-9"><div class="done-candidat_question">question</div><div class="done-candidat_reponseChoisi">reponseChoisi</div><div class="done-candidat_bonneReponse">bonneReponse</div></div><div class="col-3"><div class="done-candidat_img"></div></div></div>
+            <div class="row"><div class="col-9"><div class="done-candidat_question">question</div><div class="done-candidat_reponseChoisi">reponseChoisi</div><div class="done-candidat_bonneReponse">bonneReponse</div></div><div class="col-3"><div class="done-candidat_img"></div></div></div>
+            <div class="row"><div class="col-9"><div class="done-candidat_question">question</div><div class="done-candidat_reponseChoisi">reponseChoisi</div><div class="done-candidat_bonneReponse">bonneReponse</div></div><div class="col-3"><div class="done-candidat_img"></div></div></div>
+            <div class="row"><div class="col-9"><div class="done-candidat_question">question</div><div class="done-candidat_reponseChoisi">reponseChoisi</div><div class="done-candidat_bonneReponse">bonneReponse</div></div><div class="col-3"><div class="done-candidat_img"></div></div></div>
+            <div class="row"><div class="col-9"><div class="done-candidat_question">question</div><div class="done-candidat_reponseChoisi">reponseChoisi</div><div class="done-candidat_bonneReponse">bonneReponse</div></div><div class="col-3"><div class="done-candidat_img"></div></div></div>
+            <!-- FIN dupliquation -->
+          </div>
+        </li>
+        <!-- FIN création -->
+        <li class="container-fluid">
+          <div class="done-candidat_presentation row">
+            <div class="done-candidat_voir col-1"><i class="bi bi-caret-down-fill"></i></div>
+            <div class="done-candidat_nom col-4">Mathieu</div>
+            <div class="done-candidat_pourcentage col-1">100%</div>
+            <div class="done-candidat_region col-3">Sud-Ouest</div>
+            <div class="done-candidat_date col-3">20-12-2022</div>
+          </div>
+          <div class="done-candidat_liste container-fluid">
+            <div class="row"><div class="col-9"><div class="done-candidat_question">question</div><div class="done-candidat_reponseChoisi">reponseChoisi</div><div class="done-candidat_bonneReponse">bonneReponse</div></div><div class="col-3"><div class="done-candidat_img"></div></div></div>
+            <div class="row"><div class="col-9"><div class="done-candidat_question">question</div><div class="done-candidat_reponseChoisi">reponseChoisi</div><div class="done-candidat_bonneReponse">bonneReponse</div></div><div class="col-3"><div class="done-candidat_img"></div></div></div>
+            <div class="row"><div class="col-9"><div class="done-candidat_question">question</div><div class="done-candidat_reponseChoisi">reponseChoisi</div><div class="done-candidat_bonneReponse">bonneReponse</div></div><div class="col-3"><div class="done-candidat_img"></div></div></div>
+          </div>
+        </li>
+      </ul>
     </section>
 
     <footer class="container-fluid">
       <div class="trait-reverse"></div>
+      <p class="footer-end">Entièrement codé par M@PiR</p>
     </footer>
 
   </body>
