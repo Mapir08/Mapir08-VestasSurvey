@@ -1,8 +1,10 @@
 <?php
 
+session_start();
+
 // CONNEXION MYSQL
 try{
-  $database = new PDO('mysql:host=localhost;dbname=survey','root','root');
+  $database = new PDO('mysql:host=localhost;dbname=survey', $_SESSION['nom'], $_SESSION['pass']);
   }
   catch(Exception $e){
     die('ERROR: '.$e->getMessage());

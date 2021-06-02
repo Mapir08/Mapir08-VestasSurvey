@@ -1,4 +1,4 @@
-#login{
+#login, #account{
   text-align: center;
   form{
     margin: auto;
@@ -23,6 +23,10 @@
     color: $colorError !important;
     border-color: $colorError;
   }
+}
+
+#login{
+  display: none;
 }
 
 @media screen and (max-width: 768px){

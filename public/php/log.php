@@ -1,8 +1,10 @@
 <?php
 
+session_start();
+
 // CONNEXION MYSQL
 try{
-  $database = new PDO('mysql:host=localhost;dbname=survey','root','root');
+  $database = new PDO('mysql:host=localhost;dbname=survey', $_SESSION['nom'], $_SESSION['pass']);
   }
   catch(Exception $e){
     die('ERROR: '.$e->getMessage());
@@ -27,57 +29,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $confirmation['areaSuccess'] = false;
   }
   // Création de la liste des question en fonction du CODE envoyé
-  // syntaxe Code : V..E..H..M..A..S..
-  if ($_POST['log_code'] == '' OR strpos($_POST['log_code'],'V')!=0 OR !strpos($_POST['log_code'],'E') OR !strpos($_POST['log_code'],'H') OR !strpos($_POST['log_code'],'M') OR !strpos($_POST['log_code'],'A') OR !strpos($_POST['log_code'],'S')){
+  if ($_POST['log_code'] == ''){
     $confirmation['codeSuccess'] = false;
   }else{
-    $tempo = explode('V' , $_POST['log_code']);
-    $pourRecupV  = explode('E' , $tempo[1]);
-    $code['V'] = $pourRecupV[0]; // V est OK
-    $pourRecupE = explode('H' , $pourRecupV[1]);
-    $code['E'] = $pourRecupE[0]; // E est Ok
-    $pourRecupH = explode('M' , $pourRecupE[1]);
-    $code['H'] = $pourRecupH[0]; // H est Ok
-    $pourRecupM = explode('A' , $pourRecupH[1]);
-    $code['M'] = $pourRecupM[0]; // M est Ok
-    $pourRecupA = explode('S' , $pourRecupM[1]);
-    $code['A'] = $pourRecupA[0]; // A est Ok
-    $code['S'] = $pourRecupA[1]; // S est Ok
-
-    if ( ($code['E'] + $code['H'] + $code['M'] + $code['A'] + $code['S']) > 40 ){
-      $confirmation['codeSuccess'] = false;
-    }else{
-      // Ajout des questions E en fonction de leur nombre et en Random
-      $tempo = $database->query('SELECT question, img, reponse, choix1, choix2, choix3, choix4 FROM questions WHERE niveau='.$code['V'].' AND typeQ="E" ORDER BY rand() LIMIT '.$code['E']);
-      $i = 0;
-      while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
-        $questionnaire[$i] = $row;
-        $i+=1;
-      }
-      // Ajout des questions H en fonction de leur nombre et en Random
-      $tempo = $database->query('SELECT question, img, reponse, choix1, choix2, choix3, choix4 FROM questions WHERE niveau='.$code['V'].' AND typeQ="H"  ORDER BY rand() LIMIT '.$code['H']);
-      while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
-        $questionnaire[$i] = $row;
-        $i+=1;
-      }
-      // Ajout des questions M en fonction de leur nombre et en Random
-      $tempo = $database->query('SELECT question, img, reponse, choix1, choix2, choix3, choix4 FROM questions WHERE niveau='.$code['V'].' AND typeQ="M" ORDER BY rand() LIMIT '.$code['M']);
-      while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
-        $questionnaire[$i] = $row;
-        $i+=1;
-      }
-      // Ajout des questions A en fonction de leur nombre et en Random
-      $tempo = $database->query('SELECT question, img, reponse, choix1, choix2, choix3, choix4 FROM questions WHERE niveau='.$code['V'].' AND typeQ="A"  ORDER BY rand() LIMIT '.$code['A']);
-      while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
-        $questionnaire[$i] = $row;
-        $i+=1;
-      }
-      // Ajout des questions S en fonction de leur nombre et en Random
-      $tempo = $database->query('SELECT question, img, reponse, choix1, choix2, choix3, choix4 FROM questions WHERE niveau='.$code['V'].' AND typeQ="S"  ORDER BY rand() LIMIT '.$code['S']);
-      while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
-        $questionnaire[$i] = $row;
-        $i+=1;
-      }
+    switch ($_POST['log_code']){
+      case '25J7KM' : // AGENT
+        $code['V'] = 1; $code['E'] = 15; $code['H'] = 10; $code['M'] = 5; $code['A'] = 0; $code['S'] = 5;
+        break;
+      case '8D4KX6' : // TECHNICIEN
+        $code['V'] = 1; $code['E'] = 15; $code['H'] = 10; $code['M'] = 5; $code['A'] = 5; $code['S'] = 5;
+        break;
+      default :
+        $code['V'] = 0; $code['E'] = 0; $code['H'] = 0; $code['M'] = 0; $code['A'] = 0; $code['S'] = 0;
+        $confirmation['codeSuccess'] = false;
+    }
+    // Ajout des questions E en fonction de leur nombre et en Random
+    $i = 0;
+    $tempo = $database->query('SELECT question, img, reponse, choix1, choix2, choix3, choix4 FROM questions WHERE niveau='.$code['V'].' AND typeQ="E" ORDER BY rand() LIMIT '.$code['E']);
+    while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
+      $questionnaire[$i] = $row;
+      $i+=1;
+    }
+    // Ajout des questions H en fonction de leur nombre et en Random
+    $tempo = $database->query('SELECT question, img, reponse, choix1, choix2, choix3, choix4 FROM questions WHERE niveau='.$code['V'].' AND typeQ="H"  ORDER BY rand() LIMIT '.$code['H']);
+    while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
+      $questionnaire[$i] = $row;
+      $i+=1;
+    }
+    // Ajout des questions M en fonction de leur nombre et en Random
+    $tempo = $database->query('SELECT question, img, reponse, choix1, choix2, choix3, choix4 FROM questions WHERE niveau='.$code['V'].' AND typeQ="M" ORDER BY rand() LIMIT '.$code['M']);
+    while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
+      $questionnaire[$i] = $row;
+      $i+=1;
+    }
+    // Ajout des questions A en fonction de leur nombre et en Random
+    $tempo = $database->query('SELECT question, img, reponse, choix1, choix2, choix3, choix4 FROM questions WHERE niveau='.$code['V'].' AND typeQ="A"  ORDER BY rand() LIMIT '.$code['A']);
+    while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
+      $questionnaire[$i] = $row;
+      $i+=1;
+    }
+    // Ajout des questions S en fonction de leur nombre et en Random
+    $tempo = $database->query('SELECT question, img, reponse, choix1, choix2, choix3, choix4 FROM questions WHERE niveau='.$code['V'].' AND typeQ="S"  ORDER BY rand() LIMIT '.$code['S']);
+    while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
+      $questionnaire[$i] = $row;
+      $i+=1;
     }
   }
   // Rechercher le contact dans la BDD en fonction de l'area

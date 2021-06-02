@@ -2,7 +2,7 @@
   position: relative;
   .exam_question{
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     padding-top: 10px;
     font-size: 1.7rem;
   }
@@ -41,6 +41,7 @@
   }
   .exam_suivant{
     text-align: center;
+    padding-top: 20px;
     button{
       padding: 5px 30px 5px 30px;
       margin-bottom: 20px;
@@ -61,7 +62,12 @@
 }
 
 @media screen and (max-width: 768px){
-  #questionnaire .exam_img img{
-    max-height: 300px;
+  #questionnaire{
+    .exam_img img{
+      max-height: 300px;
+    }
+    .exam_suivant{
+      padding-top: 0 !important;
+    }
   }
 }
