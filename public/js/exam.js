@@ -3,32 +3,22 @@ $(function(){
   let qNum, nbMaxQ, listeQuestions, listeReponses, saveReponse;
   let candidatName, areaMail, pourcentage;
 
-  $('#account-form').submit(function(e){
-    e.preventDefault();
-    let logAccount = $('#account-form').serialize();
-    $.ajax({
-      type: 'POST',
-      url: 'public/php/account.php',
-      data: logAccount,
-      success: function(confirm){
-        if (confirm === ""){
-          $('#login').css('display', 'block');
-          $('footer li').css('display', 'block');
-          $('#account').css('display', 'none');
-        } else {
-          $('#account-form_log').addClass('error');
-          $('#account-form_pass').addClass('error');
-        }
+  $.ajax({
+    type: 'POST',
+    url: 'public/php/verif.php',
+    success: function(statut){
+      if (statut != ''){
+        window.location.href = 'index.html';
       }
-    });
+    }
   });
-
+  
   $('#log').submit(function(e){
     e.preventDefault();
     let logData = $('#log').serialize();
     $.ajax({
       type: 'POST',
-      url: 'public/php/log.php',
+      url: 'public/php/logExam.php',
       data: logData,
       dataType: 'json',
       success: function(retour){
