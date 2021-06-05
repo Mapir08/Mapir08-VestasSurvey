@@ -2,10 +2,17 @@
 
 session_start();
 
-$_SESSION['nom'] = $_POST['account-form_log'];
-$_SESSION['pass'] = $_POST['account-form_pass'];
-$_SESSION['table'] = 'savestest'; // A CHANGER UNE FOIS SUR SERVEUR
-$_SESSION['bdd'] = 'survey';      // A CHANGER UNE FOIS SUR SERVEUR
+$_SESSION['nom'] = strtolower($_POST['accountForm_log']);
+$_SESSION['pass'] = $_POST['accountForm_pass'];
+$_SESSION['table'] = 'savestest';                     // A CHANGER UNE FOIS SUR SERVEUR
+switch (strtolower($_POST['accountForm_log'])){       // A CHANGER UNE FOIS SUR SERVEUR
+  case 'vestas':
+    $_SESSION['bdd'] = 'survey';
+    break;
+  default:
+    $_SESSION['bdd'] = 'survey';
+    break;
+}
 
 // CONNEXION MYSQL
 try{
