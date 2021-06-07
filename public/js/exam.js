@@ -68,13 +68,12 @@ $(function(){
     }
   });
   $('#footer-detail_area').click(function(){
-    $('#footer-modal').fadeIn();
     $.ajax({
       url: 'public/php/area.php',
       type: 'POST',
       dataType: 'json',
       success: function(retour){
-        console.log(retour);
+        $('#footer-modal').fadeIn();
         let listeArea='';
         for (let i in retour){
           listeArea += '<li><span class="footer-modal_color">'+ retour[i].nomRegion +'</span> - '+ retour[i].nom +'</li>';
