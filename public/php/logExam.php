@@ -4,7 +4,7 @@ session_start();
 
 // CONNEXION MYSQL
 try{
-  $database = new PDO('mysql:host=localhost;dbname='.$_SESSION['bdd'], $_SESSION['nom'], $_SESSION['pass']);
+  $database = new PDO('mysql:host='.$_SESSION['host'].';dbname='.$_SESSION['bdd'], $_SESSION['nom'], $_SESSION['pass']);
   }
   catch(Exception $e){
     die('ERROR: '.$e->getMessage());
