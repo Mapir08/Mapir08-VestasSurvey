@@ -7,8 +7,9 @@ $(function(){
       type: 'POST',
       url: 'public/php/log.php',
       data: logAccount,
+      dataType: 'text',
       success: function(confirm){
-        if (confirm === ""){
+        if (confirm === "go"){
           window.location.href = 'exam.html';
         }else{
           $('#accountForm_log').addClass('error');
