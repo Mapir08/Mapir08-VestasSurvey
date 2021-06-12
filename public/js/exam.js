@@ -2,16 +2,6 @@ $(function(){
 
   let qNum, nbMaxQ, listeQuestions, listeReponses, saveReponse;
   let candidatName, areaMail, pourcentage;
-
-  $.ajax({
-    type: 'POST',
-    url: 'public/php/verif.php',
-    success: function(statut){
-      if (statut != ''){
-        window.location.href = 'index.html';
-      }
-    }
-  });
   
   $('#log').submit(function(e){
     e.preventDefault();
@@ -68,19 +58,7 @@ $(function(){
     }
   });
   $('#footer-detail_area').click(function(){
-    $.ajax({
-      url: 'public/php/area.php',
-      type: 'POST',
-      dataType: 'json',
-      success: function(retour){
-        $('#footer-modal').fadeIn();
-        let listeArea='';
-        for (let i in retour){
-          listeArea += '<li><span class="footer-modal_color">'+ retour[i].nomRegion +'</span> - '+ retour[i].nom +'</li>';
-        }
-        $('#footer-modal_ul').html(listeArea);
-      }
-    });
+    $('#footer-modal').fadeIn();
   });
   $('#footer-modal').click(function(){
     $('#footer-modal').fadeOut();

@@ -10,7 +10,7 @@ $(function(){
       dataType: 'text',
       success: function(confirm){
         if (confirm === "go"){
-          window.location.href = 'exam.html';
+          window.location.href = 'exam.php';
         }else{
           $('#accountForm_log').addClass('error');
           $('#account-form_pass').addClass('error');

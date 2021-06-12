@@ -73,12 +73,25 @@
       <div class="trait-reverse"></div>
       <ul class="footer-choix row">
         <li class="listeFooter"><span id="footer-detail_area">Détails Area</span></li>
-        <li class="listeFooter"><a href="liste.html">Listing tests</a></li>
+        <li class="listeFooter"><a href="liste.php">Listing tests</a></li>
       </ul>
       <div id="footer-modal">
         <div id="footer-modal_description">
           <p>Voici les responsables des régions</p>
-          <ul id="footer-modal_ul"></ul>
+          <ul id="footer-modal_ul">
+          <?php
+            require 'public/php/database.php';
+            
+            $db = Database::connect();
+            $tempo = $db->query('SELECT nomRegion, nom FROM regions ORDER BY nomRegion');
+          
+            while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
+              echo '<li><span class="footer-modal_color">'.$row["nomRegion"].'</span> - '.$row["nom"].'</li>';
+            }
+            Database::disconnect();
+
+          ?>
+          </ul>
         </div>
       </div>
       <p class="footer-end">Entièrement codé par M@PiR</p>
