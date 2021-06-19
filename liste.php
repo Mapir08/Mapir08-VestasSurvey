@@ -18,6 +18,13 @@
 </head>
 <body>
 
+  <?php
+    if ($_GET['v'] != 'confirm' ){
+      header('Location: http://survey.mapir.net');
+      exit();
+    }
+  ?>
+
   <header class="container-fluid blanc">
     <div class="entete">
       <img src="public/img/Vestas_logo.png"/>
@@ -50,7 +57,7 @@
   <footer class="container-fluid">
     <div class="trait-reverse"></div>
     <ul class="footer-choix row">
-      <li class="listeFooter"><a href="exam.php">Retour - Lancer un test</a></li>
+      <li class="listeFooter"><a href="exam.php?v=confirm">Retour - Lancer un test</a></li>
     </ul>
     <p class="footer-end">Entièrement codé par M@PiR</p>
   </footer>

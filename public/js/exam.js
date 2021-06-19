@@ -34,6 +34,9 @@ $(function(){
             $('#log_area').addClass('error');     // Si l'area n'est pas bon -> message d'erreur
           }
         }
+      },
+      error: function(error){
+        console.log(error);
       }
     });
   });

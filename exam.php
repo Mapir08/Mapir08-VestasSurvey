@@ -18,6 +18,12 @@
 </head>
   <body>
 
+  <?php
+    if ($_GET['v'] != 'confirm' ){
+      header('Location: http://survey.mapir.net');
+      exit();
+    }
+  ?>
     <header class="container-fluid blanc">
       <div class="entete">
         <img src="public/img/Vestas_logo.png"/>
@@ -31,8 +37,8 @@
         <div class="form-inline"><label for="log_name">Nom Prénom :</label><input type="text" class="form-control" name="log_name" id="log_name"></div>
         <div class="form-inline"><label for="log_code">Type exam :</label>
           <select name="log_code" id="log_code" class="form-control">
-            <option value="25J7KM">Agent</option>
-            <option value="8D4KX6">Technicien</option>
+            <option value="AGENT">Agent</option>
+            <option value="TECHNICIEN">Technicien</option>
           </select>
         </div>
         <div class="form-inline"><label for="log_area">Pour la Région :</label>
@@ -73,7 +79,7 @@
       <div class="trait-reverse"></div>
       <ul class="footer-choix row">
         <li class="listeFooter"><span id="footer-detail_area">Détails Area</span></li>
-        <li class="listeFooter"><a href="liste.php">Listing tests</a></li>
+        <li class="listeFooter"><a href="liste.php?v=confirm">Listing tests</a></li>
       </ul>
       <div id="footer-modal">
         <div id="footer-modal_description">
@@ -86,6 +92,7 @@
             $tempo = $db->query('SELECT nomRegion, nom FROM regions ORDER BY nomRegion');
           
             while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
+              $row= mb_convert_encoding($row, 'UTF-8', 'ISO-8859-1');
               echo '<li><span class="footer-modal_color">'.$row["nomRegion"].'</span> - '.$row["nom"].'</li>';
             }
             Database::disconnect();
