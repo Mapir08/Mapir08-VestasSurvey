@@ -1,0 +1,36 @@
+#resultat-list{
+  h2{
+    text-align: center;
+    padding: 20px 0;
+    font-size: 2.2rem;
+    font-family: "Caveat",cursive;
+    font-weight: bolder;
+    color: $color1;
+  }
+  .listing{
+    margin: auto;
+    &-ligne{
+      align-items: center;
+      padding: 10px 0;
+    }
+    &-question{
+      font-weight: bolder;
+      text-decoration: underline;
+    }
+    &-reponseDonnee{
+      color: $colorError;
+      text-decoration: line-through;
+    }
+    &-bonneReponse{
+      color: rgb(68, 200, 68);
+      font-style: italic;
+    }
+    &-img{
+      text-align: center;
+    }
+    img{
+      max-width: 100%;
+      max-height: 110px;
+    }
+  }
+}

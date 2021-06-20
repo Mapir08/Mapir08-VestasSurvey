@@ -33,9 +33,46 @@
     <div class="trait"></div>
   </header>
 
-  <section id="" class="container-fluid blanc">
- <!-- récupere le GET['qui'] pour lister les questions a recupere -->
+  <section id="resultat-list" class="container-fluid blanc">
+    <h2><?php echo $_GET['qui'] ?></h2>
+    <ul class="container listing">
+      <?php
+        require 'public/php/database.php';
 
+        $db = Database::connect();
+        $tempo = $db->query('SELECT `question`, `img`, `bonneReponse`, `reponseChoisi` FROM `saves` WHERE `candidat`="'.$_GET['qui'].'"');
+        Database::disconnect();
+
+        $nbReponse = $nbBonneReponse = 0;
+        while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
+          $nbReponse +=1;
+          $col0='col-9';
+          $col1='col-3';
+          $img='<img src="public/img/questions/'.$row['img'].'.png">';
+          if ($row['img'] == "false"){
+            $col0='col-12';
+            $col1='';
+            $img='';
+          }
+          $reponse ='';
+          if ($row["bonneReponse"] == $row["reponseChoisi"]){
+            $reponse = '<div class="listing-bonneReponse">'.$row["bonneReponse"].'</div>';
+            $nbBonneReponse +=1;
+          }else{
+            $reponse ='<div class="listing-reponseDonnee">'.$row["reponseChoisi"].'</div><div class="listing-bonneReponse">'.$row["bonneReponse"].'</div>';
+          }
+
+          echo '<li class="listing-ligne row">
+                  <div class="'.$col0.'">
+                    <div class="listing-question">'.$row["question"].'</div>
+                    '.$reponse.'
+                  </div>
+                  <div class="listing-img '.$col1.'">'.$img.'</div>
+                </li>';
+        }
+      ?>
+    </ul>
+    <h2><?php echo round((($nbBonneReponse/$nbReponse)*100)) ?>% de bonne réponse !</h2>
   </section>
 
   <footer class="container-fluid">
