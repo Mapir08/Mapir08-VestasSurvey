@@ -38,27 +38,28 @@ if ($_POST['log_code'] == ''){
   $i = 0;
   $tempo = $db->query('SELECT question, img, reponse, choix1, choix2, choix3, choix4 FROM questions WHERE niveau='.$code['V'].' AND typeQ="E" ORDER BY rand() LIMIT '.$code['E']);
   while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
-    $questionnaire[$i] = mb_convert_encoding($row, 'UTF-8', 'ISO-8859-1');
+    // $questionnaire[$i] = mb_convert_encoding($row, 'UTF-8', 'ISO-8859-1');
+    $questionnaire[$i] = $row;
     $i+=1;
   }
   $tempo = $db->query('SELECT question, img, reponse, choix1, choix2, choix3, choix4 FROM questions WHERE niveau='.$code['V'].' AND typeQ="H"  ORDER BY rand() LIMIT '.$code['H']);
   while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
-    $questionnaire[$i] = mb_convert_encoding($row, 'UTF-8', 'ISO-8859-1');
+    $questionnaire[$i] = $row;
     $i+=1;
   }
   $tempo = $db->query('SELECT question, img, reponse, choix1, choix2, choix3, choix4 FROM questions WHERE niveau='.$code['V'].' AND typeQ="M" ORDER BY rand() LIMIT '.$code['M']);
   while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
-    $questionnaire[$i] = mb_convert_encoding($row, 'UTF-8', 'ISO-8859-1');
+    $questionnaire[$i] = $row;
     $i+=1;
   }
   $tempo = $db->query('SELECT question, img, reponse, choix1, choix2, choix3, choix4 FROM questions WHERE niveau='.$code['V'].' AND typeQ="A"  ORDER BY rand() LIMIT '.$code['A']);
   while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
-    $questionnaire[$i] = mb_convert_encoding($row, 'UTF-8', 'ISO-8859-1');
+    $questionnaire[$i] = $row;
     $i+=1;
   }
   $tempo = $db->query('SELECT question, img, reponse, choix1, choix2, choix3, choix4 FROM questions WHERE niveau='.$code['V'].' AND typeQ="S"  ORDER BY rand() LIMIT '.$code['S']);
   while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
-    $questionnaire[$i] = mb_convert_encoding($row, 'UTF-8', 'ISO-8859-1');
+    $questionnaire[$i] = $row;
     $i+=1;
   }
 }

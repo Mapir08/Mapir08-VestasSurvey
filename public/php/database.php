@@ -14,7 +14,7 @@ class Database
     {
       try
       {
-        self::$connection = new PDO('mysql:host='.self::$dbhost.';dbname='.self::$dbname, self::$user, self::$pass);
+        self::$connection = new PDO('mysql:host='.self::$dbhost.';dbname='.self::$dbname.';charset=utf8', self::$user, self::$pass);
       }
       catch(PDOException $e)
       {
