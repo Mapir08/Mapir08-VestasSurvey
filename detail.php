@@ -80,7 +80,6 @@
     <ul class="footer-choix row">
       <li class="listeFooter"><a href="liste.php?v=confirm">Retour - Liste</a></li>
     </ul>
-    <p class="footer-end">Entièrement codé par M@PiR</p>
   </footer>
 
 </body>

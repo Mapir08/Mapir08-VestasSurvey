@@ -39,14 +39,14 @@
       <?php
         require 'public/php/database.php';
         $db = Database::connect();
-        $tempo = $db->query('SELECT `candidat`, MIN(CONCAT(DAY(`date`),"/",MONTH(`date`),"/",YEAR(`date`))) AS `date`, MIN(`region`) AS `area` FROM `saves` GROUP BY `candidat`');
+        $tempo = $db->query('SELECT `candidat`, MIN(CONCAT(DAY(`date`),"/",MONTH(`date`),"/",YEAR(`date`))) AS `date`, MIN(`region`) AS `area` FROM `saves` GROUP BY `candidat` ORDER BY `date`');
         Database::disconnect();
         while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
           echo '<li class="container-fluid tempo">
                   <div class="done-candidat_presentation row">
                     <div class="done-candidat_nom col-5">'.$row["candidat"].'</div>
                     <div class="done-candidat_date col-3">'.$row["date"].'</div>
-                    <div class="done-candidat_region col-3">'.$row["area"].'</div>
+                    <div class="done-candidat_region col-3">'.strtoupper($row["area"]).'</div>
                   </div>
                 </li>';
         }
@@ -59,7 +59,6 @@
     <ul class="footer-choix row">
       <li class="listeFooter"><a href="exam.php?v=confirm">Retour - Lancer un test</a></li>
     </ul>
-    <p class="footer-end">Entièrement codé par M@PiR</p>
   </footer>
 
 </body>

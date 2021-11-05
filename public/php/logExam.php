@@ -13,9 +13,20 @@ $confirmation = array(
 );
 $questionnaire = array();
 
+$db = Database::connect();
+
 if ($_POST['log_name'] == ''){
   $confirmation['nameSuccess'] = false;
 }
+
+// Vérification du nom dans la liste des candidats. pour éviter les doublons FONCTIONNE PAS
+$tempo = $db->query('SELECT MIN(`candidat`) FROM `saves` GROUP BY `candidat`');
+while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
+  if ($_POST['log_name'] == $row['candidat']){
+    $confirmation['nameSuccess'] = false;
+  }
+}
+
 if ($_POST['log_area'] == ''){
   $confirmation['areaSuccess'] = false;
 }
@@ -25,7 +36,7 @@ if ($_POST['log_code'] == ''){
   // Création de la liste des question en fonction du CODE envoyé
   switch ($_POST['log_code']){
     case 'AGENT' :
-      $code['V'] = 1; $code['E'] = 15; $code['H'] = 10; $code['M'] = 5; $code['A'] = 0; $code['S'] = 5;
+      $code['V'] = 1; $code['E'] = 10; $code['H'] = 10; $code['M'] = 5; $code['A'] = 0; $code['S'] = 5;
       break;
     case 'TECHNICIEN' :
       $code['V'] = 1; $code['E'] = 15; $code['H'] = 10; $code['M'] = 5; $code['A'] = 5; $code['S'] = 5;
@@ -34,11 +45,9 @@ if ($_POST['log_code'] == ''){
       $code['V'] = 0; $code['E'] = 0; $code['H'] = 0; $code['M'] = 0; $code['A'] = 0; $code['S'] = 0;
       $confirmation['codeSuccess'] = false;
   }
-  $db = Database::connect();
   $i = 0;
   $tempo = $db->query('SELECT question, img, reponse, choix1, choix2, choix3, choix4 FROM questions WHERE niveau='.$code['V'].' AND typeQ="E" ORDER BY rand() LIMIT '.$code['E']);
   while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
-    // $questionnaire[$i] = mb_convert_encoding($row, 'UTF-8', 'ISO-8859-1');
     $questionnaire[$i] = $row;
     $i+=1;
   }
@@ -77,13 +86,6 @@ $retour = array(
   'questionnaire' => $questionnaire,
   'confirmation' => $confirmation
 );
-
-// $retourBis = json_encode($retour); 
-// if ($retourBis === false){
-//   echo "Erreur d'encodage JSON ! Code erreur : " . json_last_error_msg();
-// }else{
-//   echo $retourBis;
-// }
 
 echo json_encode($retour);
 

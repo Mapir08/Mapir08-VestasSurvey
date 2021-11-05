@@ -2,8 +2,8 @@ footer{
   text-align: center;
   .footer-choix{
     justify-content: space-around;
-    margin-top: 20px;
-    font-family: 'Caveat', cursive;
+    margin: 20px 0;
+    font-family: vestas, 'Caveat', cursive;
     a, span{
       font-size: 1.4rem;
       color:$color4;
@@ -15,7 +15,7 @@ footer{
     }
   }
   .footer-end{
-    font-family: 'Caveat', cursive;
+    font-family: vestas, 'Caveat', cursive;
     margin-top: 20px;
     font-size: 0.8rem;
     font-style: italic;
@@ -32,7 +32,7 @@ footer{
   height: 100%;
   #footer-modal_description{
     p{
-      font-family: 'Caveat', cursive;
+      font-family: vestas, 'Caveat', cursive;
       font-size: 2rem;
       color:$color3;
     }
@@ -45,7 +45,7 @@ footer{
     .footer-modal_color{
       color: $color1;
       font-size: 1.2rem;
-      font-family: 'Caveat', cursive;
+      font-family: vestas, 'Caveat', cursive;
     }
   }
 }

@@ -92,7 +92,6 @@
             $tempo = $db->query('SELECT nomRegion, nom FROM regions ORDER BY nomRegion');
           
             while ($row = $tempo->fetch(PDO::FETCH_ASSOC)){
-              $row= mb_convert_encoding($row, 'UTF-8', 'ISO-8859-1');
               echo '<li><span class="footer-modal_color">'.$row["nomRegion"].'</span> - '.$row["nom"].'</li>';
             }
             Database::disconnect();
@@ -101,7 +100,6 @@
           </ul>
         </div>
       </div>
-      <p class="footer-end">Entièrement codé par M@PiR</p>
     </footer>
 
   </body>
